@@ -56,7 +56,7 @@ public class ViberWebhookController {
                     .body(json);
     }
 
-    @GetMapping("/viber_callback")
+    @GetMapping("/set_webhook")
     public ResponseEntity<String> viberCallback() {
         return ResponseEntity.status(HttpStatus.OK).body("Viber webhook callback response.");
     }
