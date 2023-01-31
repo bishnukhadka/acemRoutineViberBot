@@ -9,3 +9,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+viber:
+  auth:
+    token: ${VIBER_AUTH_TOKEN}
+  webhook:
+    url: ${VIBER_WEBHOOK_URL}
