@@ -27,7 +27,7 @@ public class ViberWebhookController {
     public ResponseEntity<String> setWebhook(){
         String requestUrl = VIBER_API_URL + "set_webhook";
         String requestBody = "{\"url\":\"" + viberWebhookUrl + "\",\"event_types\":[\"delivered\",\"failed\",\"subscribed\",\"unsubscribed\",\"conversation_started\"]}";
-
+        System.out.println(requestBody);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("X-Viber-Auth-Token", VIBER_AUTH_TOKEN);
@@ -50,14 +50,13 @@ public class ViberWebhookController {
 
         //check if the response from the viber server has status:0 or not?
         if(viberResponse.getStatus()==0)
-            return ResponseEntity.status(HttpStatus.OK).body("Webhook set successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body(json+"\nWebhook set successfully.");
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Webhook not set successfully.");
+                    .body(json);
     }
 
-//    @GetMapping("/viber_callback")
-    @GetMapping
+    @GetMapping("/viber_callback")
     public ResponseEntity<String> viberCallback() {
         return ResponseEntity.status(HttpStatus.OK).body("Viber webhook callback response.");
     }
@@ -99,6 +98,4 @@ public class ViberWebhookController {
         // Return a success response
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
-
-
 }
