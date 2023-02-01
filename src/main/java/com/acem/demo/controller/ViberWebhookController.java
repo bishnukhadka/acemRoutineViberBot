@@ -1,15 +1,12 @@
 package com.acem.demo.controller;
 
-import com.acem.demo.request.StatusJSONRequest;
+import com.acem.demo.request.EventJsonRequest;
 import com.acem.demo.response.ViberResponse;
 import com.acem.demo.util.JacksonUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import javax.sound.midi.Soundbank;
 
 
 @RestController
@@ -64,12 +61,11 @@ public class ViberWebhookController {
     @PostMapping
     public ResponseEntity<String> handleWebhookEvent(@RequestBody String requestBody) {
         // Parse the request body as a JSON object
-        ObjectMapper mapper = new ObjectMapper();
-        StatusJSONRequest statusJSONRequest;
-        statusJSONRequest = JacksonUtil.fromJson(requestBody, StatusJSONRequest.class);
+        EventJsonRequest eventJsonRequest;
+        eventJsonRequest = JacksonUtil.fromJson(requestBody, EventJsonRequest.class);
 
         // Extract the event type from the request body
-        String eventType = statusJSONRequest.getEventTypes().get(0);
+        String eventType = eventJsonRequest.getEventTypes().get(0);
 
         // Handle the event based on its type
         switch (eventType) {

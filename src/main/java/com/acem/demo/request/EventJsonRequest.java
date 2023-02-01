@@ -9,11 +9,11 @@ public class EventJsonRequest {
   private String statusMessage;
   private List<String> eventTypes;
 
-  public int getStatus() {
+  public Integer getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(Integer status) {
     this.status = status;
   }
 
