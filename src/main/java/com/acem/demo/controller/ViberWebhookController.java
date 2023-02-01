@@ -60,35 +60,37 @@ public class ViberWebhookController {
 
     @PostMapping
     public ResponseEntity<String> handleWebhookEvent(@RequestBody String requestBody) {
-        // Parse the request body as a JSON object
-        EventJsonRequest eventJsonRequest;
-        eventJsonRequest = JacksonUtil.fromJson(requestBody, EventJsonRequest.class);
-
-        // Extract the event type from the request body
-        String eventType = eventJsonRequest.getEventTypes().get(0);
-
-        // Handle the event based on its type
-        switch (eventType) {
-            case "message":
-                // Handle a message event
-                System.out.println("message event");
-                break;
-            case "subscribed":
-                // Handle a subscribed event
-                System.out.println("subscribed event");
-                break;
-            case "unsubscribed":
-                // Handle an unsubscribed event
-                System.out.println("unsubscribed event");
-                break;
-            case "conversation_started":
-                //Handle conversation_started event
-                System.out.println("conversation_started event");
-            default:
-                // Handle any other unknown event types
-                System.out.println("default event");
-                break;
-        }
+        System.out.println(requestBody);
+//
+//        // Parse the request body as a JSON object
+//        EventJsonRequest eventJsonRequest;
+//        eventJsonRequest = JacksonUtil.fromJson(requestBody, EventJsonRequest.class);
+//
+//        // Extract the event type from the request body
+//        String eventType = eventJsonRequest.getEventTypes().get(0);
+//
+//        // Handle the event based on its type
+//        switch (eventType) {
+//            case "message":
+//                // Handle a message event
+//                System.out.println("message event");
+//                break;
+//            case "subscribed":
+//                // Handle a subscribed event
+//                System.out.println("subscribed event");
+//                break;
+//            case "unsubscribed":
+//                // Handle an unsubscribed event
+//                System.out.println("unsubscribed event");
+//                break;
+//            case "conversation_started":
+//                //Handle conversation_started event
+//                System.out.println("conversation_started event");
+//            default:
+//                // Handle any other unknown event types
+//                System.out.println("default event");
+//                break;
+//        }
 
         // Return a success response
         return new ResponseEntity<>("OK", HttpStatus.OK);
