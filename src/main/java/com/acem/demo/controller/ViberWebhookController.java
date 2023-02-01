@@ -1,15 +1,15 @@
 package com.acem.demo.controller;
 
+import com.acem.demo.request.StatusJSONRequest;
 import com.acem.demo.response.ViberResponse;
 import com.acem.demo.util.JacksonUtil;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import javax.sound.midi.Soundbank;
 
 
 @RestController
@@ -65,15 +65,11 @@ public class ViberWebhookController {
     public ResponseEntity<String> handleWebhookEvent(@RequestBody String requestBody) {
         // Parse the request body as a JSON object
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode eventData;
-        try {
-            eventData = mapper.readTree(requestBody);
-        } catch (IOException e) {
-            return new ResponseEntity<>("Error parsing request body as JSON", HttpStatus.BAD_REQUEST);
-        }
+        StatusJSONRequest statusJSONRequest;
+        statusJSONRequest = JacksonUtil.fromJson(requestBody, StatusJSONRequest.class);
 
         // Extract the event type from the request body
-        String eventType = eventData.get("event").asText();
+        String eventType = statusJSONRequest.getEventTypes().get(0);
 
         // Handle the event based on its type
         switch (eventType) {
@@ -89,6 +85,9 @@ public class ViberWebhookController {
                 // Handle an unsubscribed event
                 System.out.println("unsubscribed event");
                 break;
+            case "conversation_started":
+                //Handle conversation_started event
+                System.out.println("conversation_started event");
             default:
                 // Handle any other unknown event types
                 System.out.println("default event");
