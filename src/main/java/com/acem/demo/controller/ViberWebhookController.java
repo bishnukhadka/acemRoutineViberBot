@@ -13,6 +13,7 @@ import com.acem.demo.response.Response;
 import com.acem.demo.response.ViberResponse;
 import com.acem.demo.util.JacksonUtil;
 import com.acem.demo.util.ViberUtil;
+import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -36,7 +37,7 @@ public class ViberWebhookController {
         this.scheduleRepository = scheduleRepository;
     }
 
-    @PostMapping("/set_webhook")
+    @PostConstruct
     public ResponseEntity<String> setWebhook(){
         String requestUrl = VIBER_API_URL + "set_webhook";
         String requestBody = "{\"url\":\"" + viberWebhookUrl + "\",\"event_types\":[\"delivered" +
