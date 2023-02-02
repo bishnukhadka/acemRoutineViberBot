@@ -3,6 +3,7 @@ package com.acem.demo.service.impl;
 import com.acem.demo.constant.ResponseMessageConstant;
 import com.acem.demo.entity.Lecture;
 import com.acem.demo.entity.Schedule;
+import com.acem.demo.repository.LectureRepository;
 import com.acem.demo.repository.ScheduleRepository;
 import com.acem.demo.response.LectureResponse;
 import com.acem.demo.response.Response;
@@ -19,9 +20,10 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
-
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+    private final LectureRepository lectureRepository;
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, LectureRepository lectureRepository) {
         this.scheduleRepository = scheduleRepository;
+        this.lectureRepository = lectureRepository;
     }
 
 
@@ -93,6 +95,27 @@ public class ScheduleServiceImpl implements ScheduleService {
             return new Response()
                     .statusCode(HttpServletResponse.SC_NOT_FOUND)
                     .description(ResponseMessageConstant.Batch.NOT_UPDATED)
+                    .success(false)
+                    .data("N/A");
+        }
+    }
+
+    @Override
+    public Response delete(Schedule schedule) {
+        try{
+            Long scheduleId = scheduleRepository.getByCode(schedule.getCode()).getId();
+            schedule.setId(scheduleId);
+            scheduleRepository.delete(schedule);
+            return new Response()
+                    .statusCode(HttpServletResponse.SC_OK)
+                    .description(ResponseMessageConstant.Batch.DELETED)
+                    .success(true)
+                    .data("deleted.");
+        }catch (Exception ex){
+            System.out.println("Exception: "+ex.getMessage());
+            return new Response()
+                    .statusCode(HttpServletResponse.SC_NOT_FOUND)
+                    .description(ResponseMessageConstant.Batch.DELETE_FAILED)
                     .success(false)
                     .data("N/A");
         }

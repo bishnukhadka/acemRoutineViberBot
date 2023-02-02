@@ -7,6 +7,8 @@ public interface ResponseMessageConstant {
         String NOT_FOUND = "Did not find successfully";
         String SAVED = "Batch Saved Successfully.";
         String NOT_SAVED = "Batch did not save.";
+        String DELETED = "Deleted record successfully";
+        String DELETE_FAILED = "Couldn't delete record.";
 
         String UPDATED = "Record updated successfully";
         String NOT_UPDATED = "Record failed to be updated.";
@@ -24,9 +26,10 @@ public interface ResponseMessageConstant {
         String CONVERSATION_STARTED_CALLBACK_FAILED = "Conversation started callback message " +
                 "couldn't be sent.";
         String MESSAGE_FAILED = "Message failed to send.";
-        String INVALID_MESSAGE = "The message you sent is invalid.\nPlease check the syntax.\n" +
-                "The syntax is: Course-Year-Section-Day\nFor example: BEI-III-A-SUNDAY\nYou can " +
-                "also write:\n" +
+        String INVALID_MESSAGE = "Please check the syntax.\n" +
+                "The syntax is: Course-Year-Section-Day \n\n For example: " +
+                "\n\tBEI-III-A-SUNDAY\n\nYou" +
+                " can also write:\n" +
                 "BEI-III-A-TODAY => this will return the schedule for today.\n" +
                 "BEI-III-A => this will return the schedule for tomorrow.\n" +
                 "BEI-III-A-TOMORROW => this will also return the schedule for tomorrow.";

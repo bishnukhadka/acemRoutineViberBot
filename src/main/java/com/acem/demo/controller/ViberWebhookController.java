@@ -39,7 +39,9 @@ public class ViberWebhookController {
     @PostMapping("/set_webhook")
     public ResponseEntity<String> setWebhook(){
         String requestUrl = VIBER_API_URL + "set_webhook";
-        String requestBody = "{\"url\":\"" + viberWebhookUrl + "\",\"event_types\":[\"delivered\",\"failed\",\"subscribed\",\"unsubscribed\",\"conversation_started\"]}";
+        String requestBody = "{\"url\":\"" + viberWebhookUrl + "\",\"event_types\":[\"delivered" +
+                "\",\"failed\",\"subscribed\",\"unsubscribed\",\"conversation_started\"]," +
+                "\"send_name\": true}";
         System.out.println("Request Body: " + requestBody);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -145,15 +147,15 @@ public class ViberWebhookController {
                 String temp4 = result[3].toUpperCase();
                 if(temp4.equals("TODAY")) {
                     scheduleRequest.setDay(calendar.get(Calendar.DAY_OF_WEEK)-1);
-                }if(temp4.equals("TOMORROW")){
+                }else if(temp4.equals("TOMORROW")){
                     scheduleRequest.setDay(calendar.get(Calendar.DAY_OF_WEEK));
                 }else{
-                    scheduleRequest.setDay(DayEnum.valueOf(result[3].toUpperCase()).ordinal());
+                    scheduleRequest.setDay(DayEnum.valueOf(temp4).ordinal());
                 }
             }
         }catch (Exception ex){
             System.out.println("Exception: " + ex.getMessage());
-            return ResponseMessageConstant.Viber.INVALID_MESSAGE;
+            return ResponseMessageConstant.Viber.INVALID_MESSAGE_OR_RESPONSE_UNAVAILABLE;
         }
          return scheduleRepository.getByCode(scheduleRequest.toSchedule().getCode()).toString();
     }

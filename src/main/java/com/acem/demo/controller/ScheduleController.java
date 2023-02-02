@@ -35,5 +35,11 @@ public class ScheduleController {
         return scheduleService.update(tempSchedule);
     }
 
+    @DeleteMapping
+    public Response delete(@Validated @RequestBody ScheduleRequest scheduleRequest){
+        Schedule tempSchedule = scheduleRequest.toSchedule();
+        return scheduleService.delete(tempSchedule);
+    }
+
 
 }

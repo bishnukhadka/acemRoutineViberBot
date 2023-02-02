@@ -48,7 +48,7 @@ public class Schedule implements Serializable {
     @Column(name="CODE",length = 100, nullable = false, unique = true)
     private String code;
 
-    @OneToMany(targetEntity = Lecture.class,cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Lecture.class,cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "SCHEDULE_ID", referencedColumnName = "ID")
     @Fetch(FetchMode.SUBSELECT)
     private List<Lecture> lectures;
@@ -67,4 +67,3 @@ public class Schedule implements Serializable {
                 "\n";
     }
 }
-

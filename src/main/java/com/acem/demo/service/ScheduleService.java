@@ -8,5 +8,6 @@ public interface ScheduleService {
     Response get(Schedule schedule);
     Response save(Schedule schedule);
     Response update(Schedule schedule);
+    Response delete(Schedule schedule);
 
 }
