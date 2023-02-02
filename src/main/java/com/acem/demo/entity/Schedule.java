@@ -52,5 +52,19 @@ public class Schedule implements Serializable {
     @JoinColumn(name = "SCHEDULE_ID", referencedColumnName = "ID")
     @Fetch(FetchMode.SUBSELECT)
     private List<Lecture> lectures;
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String lectureString = " ";
+        if(lectures != null){
+            for(Lecture lecture: lectures){
+                stringBuilder.append(lecture.toString());
+            }
+        }
+        lectureString = stringBuilder.toString();
+        return "\n" + course + " " + batch + " " + section + " " + day + "\n" + lectureString +
+                "\n";
+    }
 }
 

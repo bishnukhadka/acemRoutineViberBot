@@ -1,16 +1,31 @@
 package com.acem.demo.response;
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Response implements Serializable {
     private Integer statusCode;
     private Boolean success;
     private String description;
     private Object data;
+
+    public Response(HttpStatus ok, boolean success, String description) {
+        this.statusCode = ok.value();
+        this.success = success;
+        this.description = description;
+    }
+
+    public Response(HttpStatus ok, boolean success, String description, String data) {
+        this.statusCode = ok.value();
+        this.success = success;
+        this.description = description;
+        this.data = data;
+    }
 
     public Integer getStatusCode() {
         return statusCode;

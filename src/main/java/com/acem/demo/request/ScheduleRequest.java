@@ -21,4 +21,24 @@ public class ScheduleRequest {
     private Integer section;
     private Integer day;
     private List<Lecture> lectures;
+
+    public Schedule toSchedule(){
+        Schedule tempSchedule = new Schedule();
+        tempSchedule.setBatch(Year.values()[batch]);
+        tempSchedule.setCourse(CourseName.values()[course]);
+        tempSchedule.setSection(SectionEnum.values()[section]);
+        tempSchedule.setDay(DayEnum.values()[day]);
+        tempSchedule.setLectures(lectures);
+        tempSchedule.setCode(generateScheduleCode(tempSchedule));
+
+        return tempSchedule;
+    }
+
+    private String generateScheduleCode(Schedule request){
+        StringBuilder stringBuilder = new StringBuilder(request.getBatch().toString());
+        stringBuilder.append(request.getSection().toString());
+        stringBuilder.append(request.getDay().ordinal());
+        stringBuilder.append(request.getCourse().toString());
+        return stringBuilder.toString();
+    }
 }

@@ -12,3 +12,6 @@ public class App
 }
 
 
+/* TODO: use logging instead of sout.
+todo: also add delete functionality.
+ */

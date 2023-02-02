@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleResponse implements Serializable {
-    private String batch;
     private String course;
+    private String batch;
     private String section;
     private String day;
     private List<LectureResponse> lectures;

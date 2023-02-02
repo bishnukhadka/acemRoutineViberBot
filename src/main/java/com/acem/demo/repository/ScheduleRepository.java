@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
 
-    Schedule getByBatchAndCourseAndDayAndSection(Year batch, CourseName course, DayEnum Day, SectionEnum Section);
+    Schedule getByCourseAndBatchAndDayAndSection(CourseName course, Year batch, DayEnum Day,
+                                    SectionEnum Section);
 
+    Schedule getByCode(String code);
 }

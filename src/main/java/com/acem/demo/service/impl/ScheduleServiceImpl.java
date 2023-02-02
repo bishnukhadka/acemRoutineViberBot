@@ -3,7 +3,6 @@ package com.acem.demo.service.impl;
 import com.acem.demo.constant.ResponseMessageConstant;
 import com.acem.demo.entity.Lecture;
 import com.acem.demo.entity.Schedule;
-import com.acem.demo.repository.LectureRepository;
 import com.acem.demo.repository.ScheduleRepository;
 import com.acem.demo.response.LectureResponse;
 import com.acem.demo.response.Response;
@@ -19,24 +18,23 @@ import java.util.List;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private final LectureRepository lectureRepository;
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleServiceImpl(LectureRepository lectureRepository, ScheduleRepository scheduleRepository) {
-        this.lectureRepository = lectureRepository;
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
+
 
     @Override
     public Response get(Schedule schedule) {
         try{
-            Schedule getSchedule= scheduleRepository.getByBatchAndCourseAndDayAndSection(
-                    schedule.getBatch(),
+            Schedule fetchedSchedule = scheduleRepository.getByCourseAndBatchAndDayAndSection(
                     schedule.getCourse(),
+                    schedule.getBatch(),
                     schedule.getDay(),
                     schedule.getSection()
             );
-            ScheduleResponse scheduleResponse = mapToScheduleResponse(getSchedule);
+            ScheduleResponse scheduleResponse = mapToScheduleResponse(fetchedSchedule);
             return new Response()
                     .statusCode(HttpServletResponse.SC_OK)
                     .description(ResponseMessageConstant.Batch.FOUND)
@@ -47,7 +45,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             return new Response()
                     .statusCode(HttpServletResponse.SC_NOT_FOUND)
                     .description(ResponseMessageConstant.Batch.NOT_FOUND)
-                    .success(false);
+                    .success(false)
+                    .data("N/A");
         }
     }
 
@@ -66,7 +65,36 @@ public class ScheduleServiceImpl implements ScheduleService {
             return new Response()
                     .statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                     .description(ResponseMessageConstant.Batch.NOT_SAVED)
-                    .success(false);
+                    .success(false)
+                    .data("N/A");
+        }
+    }
+
+    @Override
+    public Response update(Schedule schedule) {
+        try{
+            Schedule tempSchedule = scheduleRepository.getByCourseAndBatchAndDayAndSection(
+                    schedule.getCourse(),
+                    schedule.getBatch(),
+                    schedule.getDay(),
+                    schedule.getSection()
+            );
+            tempSchedule.setLectures(schedule.getLectures());
+            Schedule updatedSchedule =
+                    scheduleRepository.save(tempSchedule);
+            ScheduleResponse scheduleResponse = mapToScheduleResponse(updatedSchedule);
+            return new Response()
+                    .statusCode(HttpServletResponse.SC_OK)
+                    .description(ResponseMessageConstant.Batch.UPDATED)
+                    .success(true)
+                    .data(scheduleResponse);
+        }catch (Exception ex){
+            System.out.println("Exception: "+ex.getMessage());
+            return new Response()
+                    .statusCode(HttpServletResponse.SC_NOT_FOUND)
+                    .description(ResponseMessageConstant.Batch.NOT_UPDATED)
+                    .success(false)
+                    .data("N/A");
         }
     }
 
@@ -78,8 +106,9 @@ public class ScheduleServiceImpl implements ScheduleService {
                 lectures) {
             lectureResponseList.add(mapToLectureResponse(lecture));
         }
-        scheduleResponse.batch(schedule.getBatch().name())
+        scheduleResponse
                 .course(schedule.getCourse().name())
+                .batch(schedule.getBatch().name())
                 .section(schedule.getSection().name())
                 .day(schedule.getDay().name())
                 .lectures(lectureResponseList);

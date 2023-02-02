@@ -34,4 +34,8 @@ public class Lecture {
     @Enumerated(EnumType.STRING)
     private GroupEnum group;
 
+    @Override
+    public String toString() {
+        return "\n" + startTime + "-" + endTime + "\t" + name + "(" + group + " Group)";
+    }
 }
