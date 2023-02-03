@@ -1,4 +1,4 @@
-# acemRoutineViberBot
+# ACEM Viber Bot
 ACEM Routine Viber Bot
 This is a simple viber bot that provides routine for the class schedule of ACEM, sunday to friday. This application uses the Viber Rest API to send and recieve messages. 
 
