@@ -31,13 +31,16 @@ public interface ResponseMessageConstant {
                 "\n\tBEI-III-A-SUNDAY\n\nYou" +
                 " can also write:\n" +
                 "BEI-III-A-TODAY => this will return the schedule for today.\n" +
-                "BEI-III-A => this will return the schedule for tomorrow.\n" +
+                "BEI-III-A => this will return the schedule for today.\n" +
                 "BEI-III-A-TOMORROW => this will also return the schedule for tomorrow.";
 
         String INVALID_MESSAGE_OR_RESPONSE_UNAVAILABLE = "The message you sent is invalid.\nPlease check the syntax.\n" +
                 "Or the requested record may not be available.\n" +
                 "Currently we only support BEI-III-A\n" +
                 "Also make sure, you are not setting day to SATURDAY.";
+
+        String NO_CLASSES_ON_SATURDAY = "You requested schedule for Saturday. There are no " +
+                "classes scheduled for Saturday.";
 
         String WELCOME_MESSAGE = "Welcome to ACEM Routine Bot, \nReply with the following syntax " +
                 "to receive your desired schedule." +

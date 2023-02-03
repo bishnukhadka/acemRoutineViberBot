@@ -24,10 +24,10 @@ public class ScheduleRequest {
 
     public Schedule toSchedule(){
         Schedule tempSchedule = new Schedule();
+        tempSchedule.setDay(DayEnum.values()[day]);
         tempSchedule.setBatch(Year.values()[batch]);
         tempSchedule.setCourse(CourseName.values()[course]);
         tempSchedule.setSection(SectionEnum.values()[section]);
-        tempSchedule.setDay(DayEnum.values()[day]);
         tempSchedule.setLectures(lectures);
         tempSchedule.setCode(generateScheduleCode(tempSchedule));
 

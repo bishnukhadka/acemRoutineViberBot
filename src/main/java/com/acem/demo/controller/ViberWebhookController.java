@@ -137,13 +137,19 @@ public class ViberWebhookController {
         }
 
         ScheduleRequest scheduleRequest = new ScheduleRequest();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        if(day==7){
+            return ResponseMessageConstant.Viber.NO_CLASSES_ON_SATURDAY;
+        }
+
         try{
             scheduleRequest.setCourse(CourseName.valueOf(result[0].toUpperCase()).ordinal());
             scheduleRequest.setBatch(Year.valueOf(result[1].toUpperCase()).ordinal());
             scheduleRequest.setSection(SectionEnum.valueOf(result[2].toUpperCase()).ordinal());
-            Calendar calendar = Calendar.getInstance();
             if(result.length==3){
-                scheduleRequest.setDay(calendar.get(Calendar.DAY_OF_WEEK));
+                scheduleRequest.setDay(day-1);
             }else{
                 String temp4 = result[3].toUpperCase();
                 if(temp4.equals("TODAY")) {
